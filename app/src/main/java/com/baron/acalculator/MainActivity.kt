@@ -19,13 +19,14 @@ class MainActivity : AppCompatActivity() {
     private var expr:String = ""
     private var exprList: MutableList<String>? = mutableListOf()
     private var result: Double? = 0.0
+    private var res_str: String = ""
     val symbols = DecimalFormatSymbols(Locale.US)
     var df = DecimalFormat("#.#####", symbols)
 
-    fun doubleToFormatDouble(number: Double, df: DecimalFormat): Double{
+    fun doubleToFormatDouble(number: Double, df: DecimalFormat): Pair<Double, String>{
         val str = df.format(number)
         val n = str.toDouble()
-        return n
+        return Pair(n, str)
     }
     private lateinit var binding: ActivityMainBinding
 
@@ -71,8 +72,7 @@ class MainActivity : AppCompatActivity() {
             Log.d("STRINGPROC", "Return expr in main: ${exprList}")
             if (exprList != null){
                 result = Expression.calc_expr(exprList!!)
-                result = doubleToFormatDouble(result!!, df)
-                outRes.setText(result.toString())
+                outRes.setText(df.format(result))
             }
 
         }
@@ -87,8 +87,7 @@ class MainActivity : AppCompatActivity() {
                 exprList = Expression.parse(expr)
                 if (exprList != null){
                     result = Expression.calc_expr(exprList!!)
-                    result = doubleToFormatDouble(result!!, df)
-                    outRes.setText(result.toString())
+                    outRes.setText(df.format(result))
                 }
                 else {
                     if (expr == "") {
@@ -101,8 +100,7 @@ class MainActivity : AppCompatActivity() {
 
         val getResult = View.OnClickListener{
             expr = result.toString()
-            result = doubleToFormatDouble(result!!, df)
-            inpNums.setText(result.toString())
+            inpNums.setText(df.format(result))
             Expression.reset()
         }
 
