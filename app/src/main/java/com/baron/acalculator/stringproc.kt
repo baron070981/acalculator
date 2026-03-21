@@ -3,23 +3,11 @@ package com.baron.acalculator
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 import java.util.Locale
-import android.util.Log
-
-fun isdigit(num_str:String): Boolean {
-    try{
-        num_str.toDouble()
-        return true
-    }
-    catch (e: Exception){
-        return false
-    }
-    return true
-}
 
 
 object Expression{
 
-    var iscomma = false
+    var iscomma = false // флаг указывающий, что в числе нет или уже есть запятая
     var df = DecimalFormat("#.###", DecimalFormatSymbols(Locale.US))
 
     fun reset(){
@@ -27,6 +15,12 @@ object Expression{
     }
 
     fun addToExprstr(expr_in:String, symbol:Any): String{
+        /*
+        Добавление символа к строковому мат выражению
+        возвращает новую строку с добавленным в конец символом,
+        если подходит под условия, иначе возвращает новую строку
+        без добавленного символа
+        */
         var expr:String = expr_in
         var symb: Char
         when (symbol){
@@ -70,13 +64,16 @@ object Expression{
             else if (expr[idx] == '-' && expr[idx-1] in "+-*/" && symb.isDigit()) { expr += symb }
             else if (expr[idx] in "+-*/" && symb.isDigit()) { expr += symb }
         }
-
         return expr
     }
 
 
     fun split(expr: String): MutableList<String>{
-
+        /*
+        * разбивает стоку с выражением на числа и знаки действия
+        * возвращает пустой список или список из чисел и знаков
+        * строка с выражением заведомо корректная должна быть
+        * */
         val split_expr: MutableList<String> = mutableListOf()
         var temp: String = ""
 
@@ -103,6 +100,9 @@ object Expression{
 
 
     fun calc(expr: MutableList<String>): String?{
+        /*
+        * расчет результата
+        */
         var result: String? = ""
         var i: Int = 0
         var op: String = ""
@@ -120,22 +120,25 @@ object Expression{
         if (expr.last() in "+-/*.,"){
             expr.removeAt(expr.lastIndex)
         }
-
+        // сначала выполняются умножение и деление
         while (true){
             if (i >= expr.lastIndex) break
             op = expr[i]
-            if (op in "/*"){
+            if (op in "/*"){ // если знак действия умножить или разделить
+                // выполняется действие с числами перед и после знака
+                // если второе число ноль, а операция деление, то вернется null
                 temp_res = operations.get(op)?.invoke(expr[i-1].toDouble(), expr[i+1].toDouble())
                 if (temp_res == null) return null
-                expr[i-1] = temp_res.toString()
-                expr.removeAt(i)
-                expr.removeAt(i)
+                expr[i-1] = temp_res.toString() // результатом заменяется первое число
+                expr.removeAt(i) // удаляется знак действия
+                expr.removeAt(i) // удаляется второе число
                 i -= 1
             }
             i += 1
         }
         i = 0
 
+        // сложение и вычитание
         while (true){
             if (i >= expr.lastIndex) break
             op = expr[i]

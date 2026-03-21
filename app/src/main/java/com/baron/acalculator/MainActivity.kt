@@ -9,9 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.baron.acalculator.databinding.ActivityMainBinding
-import java.text.DecimalFormat
-import java.text.DecimalFormatSymbols
-import java.util.Locale
 
 
 class MainActivity : AppCompatActivity() {
@@ -19,15 +16,7 @@ class MainActivity : AppCompatActivity() {
     private var expr:String = ""
     private var exprList: MutableList<String> = mutableListOf()
     private var result: String? = ""
-    private var res_str: String = ""
-    val symbols = DecimalFormatSymbols(Locale.US)
-    var df = DecimalFormat("#.#####", symbols)
 
-    fun doubleToFormatDouble(number: Double, df: DecimalFormat): Pair<Double, String>{
-        val str = df.format(number)
-        val n = str.toDouble()
-        return Pair(n, str)
-    }
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,6 +32,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         val btn_clear = binding.buttonRes // очистить ввод
+        // числа от 1 до 0
         val btn_1 = binding.button1
         val btn_2 = binding.button2
         val btn_3 = binding.button3
@@ -57,13 +47,14 @@ class MainActivity : AppCompatActivity() {
         val btn_plus = binding.buttonPlus // сложение
         val btn_del = binding.btnDel // удаление посимвольно с конца
         val btn_minus = binding.buttonMinus // вычитание
-        val btn_mult = binding.buttonMult
-        val btn_div = binding.buttonDiv
-        val btn_sep = binding.buttonSep
+        val btn_mult = binding.buttonMult // умножение
+        val btn_div = binding.buttonDiv // деление
+        val btn_sep = binding.buttonSep // запятая
 
         val inpNums = binding.inputNumbers
         val outRes = binding.resultOut
 
+        // обработка нажатий кнопок 0-9 и знаков действия
         val pressedBtn = View.OnClickListener{
             val text = (it as Button).text.toString()
             expr = Expression.addToExprstr(expr, text)
@@ -76,6 +67,7 @@ class MainActivity : AppCompatActivity() {
 
         }
 
+        // удаление символа с конца
         val deleteSymb = View.OnClickListener{
             if (expr.length > 0){
                 if (expr.last() in ".,"){
@@ -95,12 +87,14 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        // обработка нажатия на кнопку равно
         val getResult = View.OnClickListener{
             expr = result.toString()
             inpNums.setText(result)
             Expression.reset()
         }
 
+        // обработка нажатия очистки ввода
         val clearData = View.OnClickListener{
             expr = ""
             inpNums.setText(expr)
