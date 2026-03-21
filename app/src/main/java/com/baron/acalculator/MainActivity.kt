@@ -17,8 +17,8 @@ import java.util.Locale
 class MainActivity : AppCompatActivity() {
 
     private var expr:String = ""
-    private var exprList: MutableList<String>? = mutableListOf()
-    private var result: Double? = 0.0
+    private var exprList: MutableList<String> = mutableListOf()
+    private var result: String? = ""
     private var res_str: String = ""
     val symbols = DecimalFormatSymbols(Locale.US)
     var df = DecimalFormat("#.#####", symbols)
@@ -66,14 +66,13 @@ class MainActivity : AppCompatActivity() {
 
         val pressedBtn = View.OnClickListener{
             val text = (it as Button).text.toString()
-            expr = Expression.add_to_exprstr(expr, text)
+            expr = Expression.addToExprstr(expr, text)
             inpNums.setText(expr)
-            exprList = Expression.parse(expr)
+            exprList = Expression.split(expr)
             Log.d("STRINGPROC", "Return expr in main: ${exprList}")
-            if (exprList != null){
-                result = Expression.calc_expr(exprList!!)
-                outRes.setText(df.format(result))
-            }
+            result = Expression.calc(exprList)
+            if (result == null) outRes.setText("На ноль делить нельзя")
+            else outRes.setText(result)
 
         }
 
@@ -84,23 +83,21 @@ class MainActivity : AppCompatActivity() {
                 }
                 expr = expr.substring(0, expr.lastIndex)
                 inpNums.setText(expr)
-                exprList = Expression.parse(expr)
-                if (exprList != null){
-                    result = Expression.calc_expr(exprList!!)
-                    outRes.setText(df.format(result))
-                }
-                else {
-                    if (expr == "") {
+                exprList = Expression.split(expr)
+                result = Expression.calc(exprList)
+                if (result == null) outRes.setText("На ноль делить нельзя")
+                else outRes.setText(result)
+
+                if (expr == "") {
                         outRes.setText("0")
                         Expression.reset()
-                    }
                 }
             }
         }
 
         val getResult = View.OnClickListener{
             expr = result.toString()
-            inpNums.setText(df.format(result))
+            inpNums.setText(result)
             Expression.reset()
         }
 
