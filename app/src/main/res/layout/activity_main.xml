@@ -39,19 +39,6 @@
                 android:textStyle="bold" />
 
             <Button
-                android:id="@+id/btn_reserv1"
-                style="@style/Widget.MaterialComponents.TimePicker.Button"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_weight="1"
-                android:backgroundTint="#2E2B2B"
-                android:text="..."
-                android:textColor="@color/white"
-                android:textStyle="bold" />
-
-            <Button
                 android:id="@+id/btn_del"
                 style="@style/Widget.MaterialComponents.TimePicker.Button"
                 android:layout_width="wrap_content"
@@ -74,6 +61,20 @@
                 android:layout_weight="1"
                 android:backgroundTint="#2E2B2B"
                 android:text="+"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/button_minus"
+                style="@style/Widget.MaterialComponents.TimePicker.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:backgroundTint="#2E2B2B"
+                android:text="-"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -126,7 +127,7 @@
                 android:textStyle="bold" />
 
             <Button
-                android:id="@+id/button_minus"
+                android:id="@+id/button_mult"
                 style="@style/Widget.MaterialComponents.TimePicker.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -134,7 +135,7 @@
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
                 android:backgroundTint="#2E2B2B"
-                android:text="-"
+                android:text="*"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -188,7 +189,7 @@
                 android:textStyle="bold" />
 
             <Button
-                android:id="@+id/button_mult"
+                android:id="@+id/button_div"
                 style="@style/Widget.MaterialComponents.TimePicker.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -196,10 +197,10 @@
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
                 android:backgroundTint="#2E2B2B"
-                android:text="*"
+                android:text="/"
                 android:textColor="@color/white"
-                android:textSize="20sp"
                 android:textStyle="bold" />
+
         </TableRow>
 
         <TableRow
@@ -249,7 +250,7 @@
                 android:textStyle="bold" />
 
             <Button
-                android:id="@+id/button_div"
+                android:id="@+id/button_result"
                 style="@style/Widget.MaterialComponents.TimePicker.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -257,9 +258,11 @@
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
                 android:backgroundTint="#2E2B2B"
-                android:text="/"
+                android:text="="
                 android:textColor="@color/white"
+                android:textSize="20sp"
                 android:textStyle="bold" />
+
         </TableRow>
 
         <TableRow
@@ -278,9 +281,9 @@
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
                 android:backgroundTint="#2E2B2B"
-                android:text="mod"
                 android:textColor="@color/white"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:visibility="invisible" />
 
             <Button
                 android:id="@+id/button_0"
@@ -310,18 +313,12 @@
                 android:textStyle="bold" />
 
             <Button
-                android:id="@+id/button_result"
+                android:id="@+id/button"
                 style="@style/Widget.MaterialComponents.TimePicker.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_weight="1"
-                android:backgroundTint="#2E2B2B"
-                android:text="="
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:visibility="invisible" />
+
         </TableRow>
     </TableLayout>
 
